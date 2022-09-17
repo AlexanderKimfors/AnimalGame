@@ -1,58 +1,27 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Console {
     Scanner scanner = new Scanner(System.in);
-
-    public void greetPlayer() {
-        System.out.println("Welcome to AnimalGame!");
+    public String askUser(String question) {
+        System.out.println(question);
+        return scanner.nextLine();
     }
 
-    public String takePlayerName() {
-        System.out.println("What is your name?");
-        String name = scanner.nextLine();
-        return name;
+    public byte readNumber(byte min, byte max) {
+        byte number = scanner.nextByte();
+        while (number < min || number > max) {
+            System.out.println("The number most be between " + min + " and " + max + ".");
+            number = scanner.nextByte();
+        }
+        return number;
     }
 
-    public byte takePlayerAge() {
-        System.out.println("What is your age?");
-        byte age = scanner.nextByte();
-        return age;
-    }
-
-    public byte takeAnimalAge() {
-        System.out.println("What is the age of the animal?");
-        byte age = scanner.nextByte();
-        scanner.nextLine(); // cleaning
-        return age;
-    }
-
-    public String takeAnimalName() {
-        System.out.println("What is the name of the animal?");
-        String name = scanner.nextLine();
-        return name;
-    }
-
-    public String takeTypeOfAnimal() {
-        System.out.println("What type of animal is it?");
-        String name = scanner.nextLine();
-        return name;
-    }
-
-    public String takeBreed() {
-        System.out.println("What breed is it?");
-        String breed = scanner.nextLine();
-        return breed;
-    }
-
-    public byte menu() {
-        System.out.println("What do you want to do?");
-        System.out.println();
-        System.out.println("1: Get a new animal");
-        System.out.println("2: Feed animal");
-        System.out.println("3: Play with animal");
-        System.out.println();
+    public byte chooseAnimal(List<Animal> animals, String question) {
+        System.out.println(question);
+        for (int i = 1; i <= animals.size(); i++)
+            System.out.println(i + " " + animals.get(i - 1));
         byte choice = scanner.nextByte();
-        scanner.nextLine(); // cleaning
         return choice;
     }
 
@@ -62,4 +31,5 @@ public class Console {
         String answer = scanner.next();
         return !answer.equals("Y");
     }
+
 }
