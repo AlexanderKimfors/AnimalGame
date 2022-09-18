@@ -10,7 +10,6 @@ public abstract class Animal {
         this.breed = breed;
 
     }
-
     public void eat() {
         if (isHungry){
             System.out.println(name + " eats.");
@@ -19,31 +18,19 @@ public abstract class Animal {
         else
             System.out.println(name + " is not hungry.");
     }
-
     public abstract void play();
-
-
     public int getAge() {
         return age;
     }
-
-    // Make sure it is positive
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public boolean isHungry() {
         return isHungry;
     }
-
     public void setHungry(boolean hungry) {
         isHungry = hungry;
     }
-
     public String getName() {
         return name;
     }
-
     public String getBreed() {
         return breed;
     }

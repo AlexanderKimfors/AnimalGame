@@ -1,12 +1,28 @@
 import java.util.Scanner;
+import java.util.Set;
 
 public class Console {
     private Scanner scanner = new Scanner(System.in);
+
     public String askUserForString(String question) {
         System.out.println(question);
         return scanner.nextLine();
     }
 
+    public String askUserForString(String question, Set<String> domain) {
+        System.out.println(question);
+        boolean inDomain = false;
+        String answer;
+        while (true){
+            answer = scanner.nextLine().toLowerCase();
+            inDomain = domain.contains(answer);
+            if(inDomain) break;
+            System.out.println("That animal does not exist in this game.");
+            System.out.println("The domain of animals in this game are: ");
+            domain.forEach(System.out::println);
+        }
+        return answer;
+    }
 
     public int askUserForNumber(String question, int min, int max) {
         System.out.println(question);
@@ -26,6 +42,7 @@ public class Console {
     }
 
     public void waitForPlayerToPressKey() {
+        System.out.println("Press ENTER key to continue.");
         scanner.nextLine();
     }
 
@@ -44,6 +61,4 @@ public class Console {
         }
         return false;
     }
-
-
 }

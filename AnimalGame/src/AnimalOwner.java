@@ -3,9 +3,8 @@ import java.util.List;
 
 public class AnimalOwner {
     private String name;
-
     private int age;
-    private List<Animal> animals;
+    private final List<Animal> animals;
 
     public AnimalOwner(String name, int age) {
         this.name = name;
@@ -26,12 +25,9 @@ public class AnimalOwner {
     }
 
     public void addNewAnimal(String name, byte age, String typeOfAnimal, String breed) {
-        switch (typeOfAnimal){
-            case "dog":
-                animals.add(new Dog(name, age, breed));
-                break;
-            case "cat":
-                animals.add(new Cat(name, age, breed));
+        switch (typeOfAnimal) {
+            case "dog" -> animals.add(new Dog(name, age, breed));
+            case "cat" -> animals.add(new Cat(name, age, breed));
         }
     }
 
