@@ -13,4 +13,13 @@ public class Dog extends Animal{
         }
     }
 
+    @Override
+    public String toString() {
+        String intro = getName() + ": is a " + getAge() + " years old " + getBreed() + " dog,";
+        if (isHungry())
+            return intro += " and is very hungry.";
+        else
+            return intro += " and wants to play with you.";
+
+    }
 }

@@ -1,3 +1,4 @@
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.List;
 
 public class Main {
@@ -14,9 +15,8 @@ public class Main {
         } while (keepPlaying);
     }
 
-    private static byte getMenuChoiceFromPlayer() {
-        System.out.println("Enter the number that correspond to the action");
-        return console.readNumber((byte)1, (byte)4);
+    private static int getMenuChoiceFromPlayer() {
+        return console.askUserForNumber("Enter the number that correspond to the action",1, 4);
     }
 
     private static void showMenu() {
@@ -25,7 +25,8 @@ public class Main {
         System.out.println("1: Get a new animal");
         System.out.println("2: Feed animal");
         System.out.println("3: Play with animal");
-        System.out.println("4: Quite");
+        System.out.println("4: Show your animals");
+        System.out.println("5: Quite");
         System.out.println();
     }
 
@@ -34,13 +35,13 @@ public class Main {
     }
 
     private static void initPlayer() {
-        String name = console.askUser("What is your name?");
-        String age = console.askUser("What is your age?");
+        String name = console.askUserForString("What is your name?");
+        String age = console.askUserForString("What is your age?");
         byte age2 = Byte.parseByte(age);
         player = new AnimalOwner(name, age2);
     }
 
-    private static void action(byte choice) {
+    private static void action(int choice) {
         switch (choice){
             case 1:
                 addNewAnimal();
@@ -52,37 +53,67 @@ public class Main {
                 playWithAnimal();
                 break;
             case 4:
+                showPlayersInformation();
+                break;
+            case 5:
                 keepPlaying = false;
                 break;
-
         }
     }
+
+    private static void showPlayersInformation() {
+        System.out.println("Your name is: " + player.getName());
+        System.out.println("Your age is: " + player.getAge());
+        if(player.getAnimals().size() == 0) {
+            System.out.println("You have no animals.");
+            return;
+        }
+        if(player.getAnimals().size() == 1) {
+            System.out.println("you have one animal. Here is information about your animal: \n");
+        }
+        else
+            System.out.println("you have " + player.getAnimals().size() + " animals. Here is information about your animals:");
+
+        player.getAnimals().forEach(System.out::println);
+
+        System.out.println("\nPress any key to continue to the menu.");
+        console.waitForPlayerToPressKey();
+    }
+
     private static void playWithAnimal() {
         List<Animal> animals = player.getAnimals();
-        System.out.println("Which animal do you want to play with?");
         for (int i = 1; i <= animals.size(); i++)
             System.out.println(i + " " + animals.get(i - 1));
-        byte choice = console.readNumber((byte)1, (byte)animals.size());
+        int choice = console.askUserForNumber("Which animal do you want to play with?", 1, animals.size());
         player.playWithAnimal(animals.get(choice));
     }
 
     private static void feedAnimal() {
         List<Animal> animals = player.getAnimals();
-        System.out.println("Which animal do you want to feed?");
+        if(animals.size() <= 0) {
+            System.out.println("You don't have any animal to feed.");
+            return;
+        }
         for (int i = 1; i <= animals.size(); i++)
             System.out.println(i + " " + animals.get(i - 1));
-        byte choice = console.readNumber((byte)1, (byte)animals.size());
+        int choice = console.askUserForNumber("Which animal do you want to feed?", 1, animals.size());
         player.feedAnimal(animals.get(choice));
     }
 
     private static void addNewAnimal() {
-        String name = console.askUser("What is the name of the animal?");
-        String age = console.askUser("What is the age of the animal?");
-        String type = console.askUser("What type of animal is it?");
-        String breed = console.askUser("What breed is it?");
+        String name = console.askUserForString("What is the name of the animal?");
+        int age = console.askUserForNumber("What is the age of the animal?", 0, 100);
+        String animalType;
+        do {
+            animalType = console.askUserForString("What type of animal is it?").toLowerCase();
+        } while (!validAnimalType(animalType));
+        String breed = console.askUserForString("What breed is it?");
 
-        byte age2 = Byte.parseByte(age);
-        player.addNewAnimal(name, age2, type, breed);
+        player.addNewAnimal(name, (byte)age, animalType, breed);
+    }
+
+    private static boolean validAnimalType(String type) {
+        return (type.equals("dog") || type.equals("cat"));
     }
 
 }

@@ -3,8 +3,8 @@ import java.util.List;
 
 public class AnimalOwner {
     private String name;
-    private int age;
 
+    private int age;
     private List<Animal> animals;
 
     public AnimalOwner(String name, int age) {
@@ -43,5 +43,11 @@ public class AnimalOwner {
         return animals;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public int getAge() {
+        return age;
+    }
 }

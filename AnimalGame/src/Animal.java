@@ -48,13 +48,4 @@ public abstract class Animal {
         return breed;
     }
 
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", breed='" + breed + '\'' +
-                ", isHungry=" + isHungry +
-                '}';
-    }
 }

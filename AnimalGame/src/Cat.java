@@ -12,6 +12,14 @@ public class Cat extends Animal{
             setHungry(true);
         }
     }
+    @Override
+    public String toString() {
+        String intro = getName() + ": is a " + getAge() + " years old " + getBreed() + " cat,";
+        if (isHungry())
+            return intro += " and is very hungry.";
+        else
+            return intro += " and wants to play with you.";
 
+    }
 
 }
